@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <% if (error === 'userNotFound') { %>
+        <p style="color: pink;">ID User yang kamu masukan tidak ketemu</p>
+    <% } %>
+    <% if (error === 'gameNotFound') { %>
+        <p style="color: pink;">ID Game yang kamu masukan tidak ketemu</p>
+    <% } %>
+    <h1>Home</h1>
+    <!-- line -->
+    <h3>Users</h3>
+    <a href="/dashboard/users/create">New User</a>
+    <!-- line -->
+    <table>
+        <thead>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Full Name</th>
+            <th>Hobby</th>
+            <th>Address</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+            <% users.forEach((user) => { %>
+                <tr>
+                    <td><%= user.id %></td>
+                    <td><%= user.username %></td>
+                    <td><%= user.role %></td>
+                    <td><%= user.bio.first_name %> <%= user.bio.last_name %></td>
+                    <td><%= user.bio.hobby %></td>
+                    <td><%= user.bio.address %></td>
+                    <td>
+                        <% if (user.role === 'PLAYER') { %>
+                            <a href="/dashboard/users/<%= user.id %>/histories">Histories</a>
+                            <a href="/dashboard/users/<%= user.id %>/update">Edit</a>
+                            <a href="/dashboard/users/<%= user.id %>/delete">Delete</a>
+                        <% } %>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>
